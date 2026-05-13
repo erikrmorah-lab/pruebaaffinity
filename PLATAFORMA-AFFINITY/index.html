@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Affinity - Estudio Creativo</title>
+    <link rel="icon" href="icono.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="security.js"></script>
+</head>
+<body>
+    <!-- Login del cliente (visible inicialmente) -->
+    <div id="client-login-container" class="login-container active">
+        <div class="login-box">
+            <div class="login-header">
+                <img src="Recurso 5.png" alt="Affinity Logo" class="login-logo clickable-logo">
+                <p class="tagline">Estudio Creativo</p>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" id="login-tab">Iniciar Sesión</button>
+                <button class="tab-btn" id="register-tab">Registrarse</button>
+            </div>
+            
+            <form id="client-login-form" class="login-form active">
+                <div class="form-group">
+                    <label for="login-email"><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="login-email" placeholder="tu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="login-password" placeholder="Tu contraseña" required>
+                    <div class="password-toggle">
+                        <i class="fas fa-eye" id="toggle-login-password"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+            </form>
+            
+            <form id="client-register-form" class="login-form">
+                <div class="form-group">
+                    <label for="register-name"><i class="fas fa-user"></i> Nombre Completo</label>
+                    <input type="text" id="register-name" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-company"><i class="fas fa-building"></i> Nombre de la Empresa</label>
+                    <input type="text" id="register-company" placeholder="Nombre de tu empresa" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-phone"><i class="fas fa-phone"></i> Teléfono</label>
+                    <input type="tel" id="register-phone" placeholder="Número de teléfono" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email"><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="register-email" placeholder="tu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="register-password" placeholder="Crea una contraseña segura" required>
+                    <div class="password-toggle">
+                        <i class="fas fa-eye" id="toggle-register-password"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password"><i class="fas fa-lock"></i> Confirmar Contraseña</label>
+                    <input type="password" id="confirm-password" placeholder="Repite tu contraseña" required>
+                    <div class="password-toggle">
+                        <i class="fas fa-eye" id="toggle-confirm-password"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Crear Cuenta</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Al registrarte, aceptas nuestros <a href="#">Términos y Condiciones</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel del cliente -->
+    <div id="client-panel" class="hidden">
+        <header class="main-header">
+            <div class="header-left">
+                <img src="Recurso 5.png" alt="Affinity Logo" class="header-logo clickable-logo">
+            </div>
+            <div class="header-right">
+                <div class="client-info">
+                    <span id="client-name-display">Cliente</span>
+                    <span id="client-company-display" class="client-company"></span>
+                    <button id="client-logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                </div>
+                <button id="generate-receipt" class="btn-primary">
+                    <i class="fas fa-receipt"></i> Generar Recibo
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="services-container">
+                <h2 class="section-title">Catálogo de Servicios</h2>
+                <p class="section-subtitle">Selecciona los servicios que deseas contratar</p>
+                
+                <div id="services-catalog" class="services-catalog"></div>
+                
+                <div class="selection-summary">
+                    <h3><i class="fas fa-shopping-cart"></i> Resumen de tu selección</h3>
+                    <div id="selected-services-list" class="selected-services-list">
+                        <p class="empty-message">No has seleccionado servicios aún.</p>
+                    </div>
+                    <div class="summary-footer">
+                        <div class="total-amount">
+                            <span>Total:</span>
+                            <span id="total-amount">$0</span>
+                        </div>
+                        <button id="clear-selection" class="btn-secondary">
+                            <i class="fas fa-trash"></i> Limpiar selección
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de login administrador -->
+    <div id="admin-login-modal" class="modal hidden">
+        <div class="modal-content admin-modal">
+            <div class="modal-header">
+                <img src="Recurso 5.png" alt="Affinity Logo" class="modal-logo clickable-logo">
+                <h2>Acceso Administrador</h2>
+                <button id="close-admin-modal" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="admin-username"><i class="fas fa-user-shield"></i> Usuario</label>
+                        <input type="text" id="admin-username" placeholder="Usuario administrador" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-password"><i class="fas fa-key"></i> Contraseña</label>
+                        <input type="password" id="admin-password" placeholder="Contraseña de administrador" required>
+                        <div class="password-toggle">
+                            <i class="fas fa-eye" id="toggle-admin-password"></i>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-login">Acceder al Panel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de administrador -->
+    <div id="admin-panel" class="hidden">
+        <header class="admin-header">
+            <div class="admin-header-left">
+                <img src="Recurso 5.png" alt="Affinity Logo" class="admin-logo clickable-logo">
+                <h1>Panel de Administración</h1>
+            </div>
+            <div class="admin-header-right">
+                <button id="admin-logout" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+                <button id="back-to-client" class="btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver al Cliente
+                </button>
+            </div>
+        </header>
+
+        <main class="admin-main">
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-tab="clients">
+                    <i class="fas fa-users"></i> Clientes
+                </button>
+                <button class="admin-tab-btn" data-tab="receipts">
+                    <i class="fas fa-receipt"></i> Recibos
+                </button>
+                <button class="admin-tab-btn" data-tab="sections">
+                    <i class="fas fa-th-large"></i> Secciones
+                </button>
+                <button class="admin-tab-btn" data-tab="divisions">
+                    <i class="fas fa-layer-group"></i> Divisiones
+                </button>
+                <button class="admin-tab-btn" data-tab="services">
+                    <i class="fas fa-concierge-bell"></i> Servicios
+                </button>
+            </div>
+
+            <div class="admin-tab-content">
+                <div id="clients-tab" class="admin-tab-pane active">
+                    <h2><i class="fas fa-users"></i> Gestión de Clientes</h2>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>ID</th><th>Nombre</th><th>Empresa</th><th>Teléfono</th><th>Email</th><th>Fecha Registro</th><th>Recibos</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody id="clients-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="receipts-tab" class="admin-tab-pane">
+                    <h2><i class="fas fa-receipt"></i> Gestión de Recibos</h2>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead><tr><th>Folio</th><th>Cliente</th><th>Empresa</th><th>Fecha</th><th>Servicios</th><th>Total</th><th>Acciones</th></tr></thead>
+                            <tbody id="receipts-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="sections-tab" class="admin-tab-pane">
+                    <h2><i class="fas fa-th-large"></i> Gestión de Secciones</h2>
+                    <div class="admin-actions"><button id="add-section" class="btn-primary"><i class="fas fa-plus"></i> Nueva Sección</button></div>
+                    <div id="sections-list" class="editable-list"></div>
+                </div>
+
+                <div id="divisions-tab" class="admin-tab-pane">
+                    <h2><i class="fas fa-layer-group"></i> Gestión de Divisiones</h2>
+                    <div class="admin-actions"><button id="add-division" class="btn-primary"><i class="fas fa-plus"></i> Nueva División</button></div>
+                    <div id="divisions-list" class="editable-list"></div>
+                </div>
+
+                <div id="services-tab" class="admin-tab-pane">
+                    <h2><i class="fas fa-concierge-bell"></i> Gestión de Servicios</h2>
+                    <div class="admin-actions"><button id="add-service" class="btn-primary"><i class="fas fa-plus"></i> Nuevo Servicio</button></div>
+                    <div id="services-list" class="editable-list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para edición de elementos -->
+    <div id="edit-modal" class="modal hidden">
+        <div class="modal-content edit-modal">
+            <div class="modal-header">
+                <h2 id="edit-modal-title">Editar Elemento</h2>
+                <button id="close-edit-modal" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form"></form>
+            </div>
+            <div class="modal-footer">
+                <button id="save-edit" class="btn-primary">Guardar Cambios</button>
+                <button id="cancel-edit" class="btn-secondary">Cancelar</button>
+                <button id="delete-item" class="btn-delete hidden">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de recibo generado -->
+    <div id="receipt-modal" class="modal hidden">
+        <div class="modal-content receipt-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-receipt"></i> Recibo Generado</h2>
+                <button id="close-receipt-modal" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="receipt-preview" class="receipt-preview"></div>
+                <div class="receipt-actions">
+                    <button id="send-whatsapp" class="btn-whatsapp" disabled>
+                        <i class="fab fa-whatsapp"></i> Responder Cuestionario y Enviar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de cuestionario previo al envío -->
+    <div id="questionnaire-modal" class="modal hidden">
+        <div class="modal-content questionnaire-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-clipboard-list"></i> Cuestionario de Marca</h2>
+                <button id="close-questionnaire-modal" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="questionnaire-intro">Por favor, responde las siguientes preguntas para completar tu solicitud. Tus respuestas se enviarán junto con el recibo.</p>
+                <form id="questionnaire-form" class="questionnaire-form">
+                    <div class="form-group">
+                        <label>1. ¿Cuál es el nombre de la marca y tiene algún significado especial?</label>
+                        <textarea name="q1" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>2. ¿A qué se dedica la empresa o proyecto? (producto o servicio principal)</label>
+                        <textarea name="q2" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>3. ¿Cuál es la misión, visión o propósito del negocio?</label>
+                        <textarea name="q3" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>4. ¿Quién es tu público objetivo? (edad, estilo de vida, gustos)</label>
+                        <textarea name="q4" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>5. ¿Qué valores quieres que transmita tu marca? (ej. elegancia, diversión, frescura, lujo)</label>
+                        <textarea name="q5" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>6. ¿Cómo quieres que se perciba tu marca? (moderna, tradicional, juvenil, premium, etc.)</label>
+                        <textarea name="q6" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>7. ¿Tienes colores preferidos o que quieras evitar?</label>
+                        <textarea name="q7" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>8. ¿Hay algún estilo de marca que te guste? (minimalista, tipográfico, ilustrado, etc.)</label>
+                        <textarea name="q8" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>9. ¿Dónde se va a usar principalmente tu marca? (redes sociales, empaques, uniformes, publicidad)</label>
+                        <textarea name="q9" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>10. ¿Tienes referencias de marcas que te gusten o de la competencia?</label>
+                        <textarea name="q10" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="submit-questionnaire" class="btn-primary">Enviar Cuestionario y Recibo</button>
+                <button id="cancel-questionnaire" class="btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cantidad de servicio -->
+    <div id="quantity-modal" class="modal hidden">
+        <div class="modal-content quantity-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-calculator"></i> Cantidad de Servicio</h2>
+                <button id="close-quantity-modal" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="quantity-info">
+                    <h3 id="quantity-service-name"></h3>
+                    <p id="quantity-service-description"></p>
+                    <div class="price-info"><span>Precio unitario: </span><span id="quantity-unit-price">$0</span></div>
+                </div>
+                <div class="quantity-control">
+                    <label for="quantity-input">Cantidad:</label>
+                    <div class="quantity-input-group">
+                        <button id="decrease-quantity" class="quantity-btn"><i class="fas fa-minus"></i></button>
+                        <input type="number" id="quantity-input" min="1" value="1" step="1">
+                        <button id="increase-quantity" class="quantity-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="quantity-total"><span>Total: </span><span id="quantity-total-price">$0</span></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-quantity" class="btn-primary">Agregar al Carrito</button>
+                <button id="cancel-quantity" class="btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

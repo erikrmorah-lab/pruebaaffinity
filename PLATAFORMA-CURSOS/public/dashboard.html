@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Cursos</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="logo-container">
+    <img src="/logotipo.png" alt="Logo" class="logo-img">
+  </div>
+  
+  <div class="user-header">
+    <span><i class="fas fa-user-circle"></i> Hola, <strong id="userName"></strong> | <i class="fas fa-building"></i> <span id="userMarca"></span></span>
+    <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+  </div>
+
+  <!-- Selector de cursos -->
+  <div class="cursos-selector" id="cursosSelector"></div>
+
+  <!-- Contenido principal -->
+  <div class="dashboard-container" id="mainContent" style="display: none;">
+    <aside class="clases-lista">
+      <h3><i class="fas fa-list"></i> 📚 Clases del curso</h3>
+      <div id="listaClases"></div>
+    </aside>
+
+    <main class="contenido-principal">
+      <div id="claseDetalle">
+        <h2 id="claseTitulo">Selecciona una clase</h2>
+        
+        <div class="video-container">
+          <video id="claseVideo" controls controlsList="nodownload" oncontextmenu="return false;" style="width:100%; max-height: 450px;"></video>
+        </div>
+        
+        <div class="recursos-lateral">
+          <div class="recurso-seccion">
+            <h4><i class="fas fa-download"></i> 📎 Materiales descargables</h4>
+            <ul id="listaMateriales"></ul>
+          </div>
+          <div class="recurso-seccion">
+            <h4><i class="fas fa-chalkboard"></i> 📊 Diapositivas</h4>
+            <ul id="listaDiapositivas"></ul>
+          </div>
+          <div class="recurso-seccion">
+            <h4><i class="fas fa-list"></i> 📋 Temario</h4>
+            <ul id="listaTemario"></ul>
+          </div>
+        </div>
+        
+        <div class="calificacion-comentarios">
+          <div class="calificacion-area">
+            <p><i class="fas fa-star" style="color: #ff7400;"></i> ⭐ Califica esta clase:</p>
+            <div class="estrellas" id="estrellasCalificacion"></div>
+            <textarea id="comentarioInput" placeholder="Escribe un comentario..."></textarea>
+            <button id="enviarCalificacionBtn"><i class="fas fa-paper-plane"></i> Enviar calificación</button>
+          </div>
+
+          <div class="comentarios-area">
+            <h4><i class="fas fa-comments"></i> 💬 Comentarios de alumnos:</h4>
+            <div id="listaComentarios"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="cursoBloqueadoMsg" class="curso-bloqueado" style="display: none; text-align: center; padding: 60px;">
+    <h2><i class="fas fa-lock"></i> 🔒 Curso Bloqueado</h2>
+    <p>No tienes acceso a este curso. Contacta al administrador.</p>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

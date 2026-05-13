@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma de Cursos | Iniciar Sesión</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="logo-container">
+    <img src="/logotipo.png" alt="Logo" id="logo" class="logo-img">
+  </div>
+
+  <div class="container">
+    <div class="form-container">
+      <h2><i class="fas fa-graduation-cap"></i> Bienvenido</h2>
+      <input type="text" id="loginNombre" placeholder="🏢 Nombre de la empresa">
+      <input type="password" id="loginPassword" placeholder="🔒 Contraseña">
+      <button id="btnLogin"><i class="fas fa-sign-in-alt"></i> Ingresar</button>
+      <div id="loginMessage" class="message"></div>
+    </div>
+  </div>
+
+  <script>
+    const API = '/api';
+    
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+      const nombre = document.getElementById('loginNombre').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!nombre || !password) {
+        document.getElementById('loginMessage').innerText = '❌ Ingresa tu nombre de empresa y contraseña';
+        return;
+      }
+      
+      const res = await fetch(`${API}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        if (data.rol === 'admin') {
+          window.location.href = '/admin.html';
+        } else {
+          window.location.href = '/dashboard.html';
+        }
+      } else {
+        document.getElementById('loginMessage').innerText = '❌ Error: Credenciales inválidas';
+      }
+    });
+
+    document.getElementById('logo').addEventListener('click', () => {
+      Swal.fire({
+        title: '👑 Acceso Administrador',
+        html: '<input id="adminNombre" placeholder="Nombre de la empresa" class="swal2-input"><input id="adminPass" type="password" placeholder="Contraseña" class="swal2-input">',
+        background: '#ffffff',
+        confirmButtonColor: '#8a82f2',
+        preConfirm: async () => {
+          const nombre = document.getElementById('adminNombre').value;
+          const password = document.getElementById('adminPass').value;
+          const res = await fetch(`${API}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, password })
+          });
+          const data = await res.json();
+          if (data.success && data.rol === 'admin') {
+            window.location.href = '/admin.html';
+          } else {
+            Swal.showValidationMessage('❌ Credenciales de administrador inválidas');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

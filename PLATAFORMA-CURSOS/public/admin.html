@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrador</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="logo-container">
+    <img src="/logotipo.png" alt="Logo Admin" class="logo-img">
+  </div>
+  
+  <div class="admin-header">
+    <h2><i class="fas fa-crown"></i> Panel de Administración</h2>
+    <button id="adminLogout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="tab-btn active" data-tab="usuarios"><i class="fas fa-users"></i> 👥 Usuarios</button>
+    <button class="tab-btn" data-tab="cursos"><i class="fas fa-book"></i> 📚 Cursos y Clases</button>
+    <button class="tab-btn" data-tab="accesos"><i class="fas fa-lock"></i> 🔒 Bloquear Accesos</button>
+    <button class="tab-btn" data-tab="calificaciones"><i class="fas fa-star"></i> ⭐ Calificaciones</button>
+  </div>
+
+  <!-- TAB: USUARIOS -->
+  <div id="tab-usuarios" class="tab-content active">
+    <div class="admin-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3><i class="fas fa-user-plus"></i> Gestión de Usuarios</h3>
+        <button id="agregarUsuarioBtn"><i class="fas fa-plus"></i> + Nuevo Usuario</button>
+      </div>
+      <div id="listaUsuarios"></div>
+    </div>
+  </div>
+
+  <!-- TAB: CURSOS -->
+  <div id="tab-cursos" class="tab-content">
+    <div class="admin-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3><i class="fas fa-graduation-cap"></i> Gestión de Cursos</h3>
+        <button id="agregarCursoBtn"><i class="fas fa-plus"></i> + Nuevo Curso</button>
+      </div>
+      <div id="listaCursosAdmin"></div>
+      
+      <hr style="margin: 30px 0;">
+      
+      <h3><i class="fas fa-video"></i> Gestión de Clases</h3>
+      <select id="cursoSelectorClases" style="width: 100%; padding: 12px; border-radius: 16px; margin: 10px 0;">
+        <option value="">Seleccionar curso</option>
+      </select>
+      <button id="agregarClaseBtn"><i class="fas fa-plus"></i> + Agregar Clase</button>
+      <div id="listaClasesAdmin" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+  <!-- TAB: ACCESOS -->
+  <div id="tab-accesos" class="tab-content">
+    <div class="admin-panel">
+      <h3><i class="fas fa-lock"></i> Bloquear/Desbloquear Cursos por Usuario</h3>
+      <div id="listaUsuariosAccesos"></div>
+    </div>
+  </div>
+
+  <!-- TAB: CALIFICACIONES -->
+  <div id="tab-calificaciones" class="tab-content">
+    <div class="admin-panel">
+      <h3><i class="fas fa-star"></i> Todas las calificaciones y comentarios</h3>
+      <div id="listaCalificacionesAdmin"></div>
+    </div>
+  </div>
+
+  <!-- Modal para crear usuario -->
+  <div id="modalUsuario" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modalUsuarioTitle"><i class="fas fa-user-plus"></i> Nuevo Usuario</h3>
+      <input type="text" id="userNombrePersona" placeholder="👤 Nombre de la persona" style="margin-bottom: 15px;">
+      <input type="text" id="userNombreEmpresa" placeholder="🏢 Nombre de la empresa" style="margin-bottom: 15px;">
+      <input type="password" id="userPassword" placeholder="🔒 Contraseña" style="margin-bottom: 15px;">
+      <button id="guardarUsuarioBtn"><i class="fas fa-save"></i> Crear Usuario</button>
+    </div>
+  </div>
+
+  <!-- Modal para clase -->
+  <div id="modalClase" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modalTitle">Editar Clase</h3>
+      <input type="text" id="editTitulo" placeholder="Título de la clase">
+      
+      <h4><i class="fas fa-video"></i> Video actual:</h4>
+      <video id="videoPreview" controls controlsList="nodownload" oncontextmenu="return false;" style="width:100%; max-height:200px;"></video>
+      <input type="file" id="uploadVideo" accept="video/*">
+      <button id="subirVideoBtn"><i class="fas fa-upload"></i> Subir nuevo video</button>
+      
+      <h4><i class="fas fa-file-pdf"></i> Agregar Recurso PDF</h4>
+      <select id="tipoRecurso">
+        <option value="material"><i class="fas fa-download"></i> Material descargable</option>
+        <option value="diapositiva"><i class="fas fa-chalkboard"></i> Diapositiva</option>
+        <option value="temario"><i class="fas fa-list"></i> Temario</option>
+      </select>
+      <input type="text" id="nombreRecurso" placeholder="Nombre del archivo (ej: Manual_Usuario.pdf)" style="width:100%; margin: 10px 0; padding: 10px;">
+      <input type="file" id="uploadPDF" accept="application/pdf">
+      <button id="subirRecursoBtn" style="margin-top: 10px;"><i class="fas fa-upload"></i> Subir PDF</button>
+      
+      <h4 style="margin-top: 20px;"><i class="fas fa-folder-open"></i> Recursos actuales:</h4>
+      <div id="recursosActuales"></div>
+      
+      <button id="deleteClaseBtn" class="delete-btn"><i class="fas fa-trash"></i> Eliminar Clase</button>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

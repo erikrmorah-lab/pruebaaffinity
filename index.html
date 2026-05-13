@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affinity Estudio Creativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
+            transition: opacity 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* Ocultos por defecto */
+        }
+
+        /* Si la pantalla es de PC (mínimo 769px) */
+        @media (min-width: 769px) {
+            #video-pc {
+                display: block;
+            }
+        }
+
+        /* Si la pantalla es de Celular/Tablet (máximo 768px) */
+        @media (max-width: 768px) {
+            #video-movil {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <!-- Video para Laptops -->
+        <video id="video-pc" autoplay muted playsinline>
+            <source src="video/banner.mp4" type="video/mp4">
+        </video>
+
+        <!-- Video para Celulares (crea uno vertical llamado banner-movil.mp4) -->
+        <video id="video-movil" autoplay muted playsinline>
+            <source src="video/banner-movil.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script>
+        let redireccionado = false;
+
+        function iniciarTransicion() {
+            if (!redireccionado) {
+                redireccionado = true;
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = "Bienvenida.html";
+                }, 1500); 
+            }
+        }
+
+        // Detectamos qué video se está mostrando realmente
+        const esMovil = window.innerWidth <= 768;
+        const videoActivo = document.getElementById(esMovil ? "video-movil" : "video-pc");
+
+        // Lógica de desvanecimiento para el video que esté activo
+        videoActivo.onloadedmetadata = function() {
+            const tiempoParaDesvanecer = (videoActivo.duration - 1.5) * 1000;
+            if (tiempoParaDesvanecer > 0) {
+                setTimeout(iniciarTransicion, tiempoParaDesvanecer);
+            }
+        };
+
+        videoActivo.onended = iniciarTransicion;
+
+        // Respaldo de seguridad
+        setTimeout(() => {
+            if (!redireccionado) iniciarTransicion();
+        }, 8000);
+    </script>
+</body>
+</html>

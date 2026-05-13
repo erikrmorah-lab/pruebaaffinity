@@ -1,0 +1,207 @@
+{
+  "clients": [],
+  "admins": [
+    {
+      "id": 1,
+      "username": "AffGaryDesign99",
+      "password": "AffDesign2026Gary"
+    }
+  ],
+  "sections": [
+    {
+      "id": 1,
+      "name": "SOCIAL MEDIA",
+      "icon": "fas fa-hashtag",
+      "description": "Servicios de redes sociales",
+      "order": 1
+    },
+    {
+      "id": 2,
+      "name": "BRANDING",
+      "icon": "fas fa-palette",
+      "description": "Servicios de identidad visual",
+      "order": 2
+    }
+  ],
+  "divisions": [
+    {
+      "id": 1,
+      "name": "Diseño y creación de contenido visual",
+      "sectionId": 1,
+      "order": 1,
+      "description": "Diseño de contenido visual para redes sociales"
+    },
+    {
+      "id": 2,
+      "name": "Gestión y administración de redes sociales",
+      "sectionId": 1,
+      "order": 2,
+      "description": "Gestión y administración completa de redes"
+    },
+    {
+      "id": 3,
+      "name": "Auditoría y estrategia",
+      "sectionId": 1,
+      "order": 3,
+      "description": "Auditoría y estrategia de redes sociales"
+    },
+    {
+      "id": 4,
+      "name": "Producción de video y fotografía",
+      "sectionId": 1,
+      "order": 4,
+      "description": "Producción de video y fotografía para redes"
+    },
+    {
+      "id": 5,
+      "name": "Publicidad en Facebook & Instagram Ads",
+      "sectionId": 1,
+      "order": 5,
+      "description": "Publicidad y anuncios en redes sociales"
+    },
+    {
+      "id": 6,
+      "name": "Identidad Corporativa",
+      "sectionId": 2,
+      "order": 1,
+      "description": "Desarrollo de identidad corporativa"
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "name": "Post / Historia animada o estática",
+      "description": "Diseño de post o historia para redes sociales",
+      "price": 250,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "individual",
+      "order": 1,
+      "hasQuantity": true,
+      "quantityLabel": "posts"
+    },
+    {
+      "id": 2,
+      "name": "Carrusel (3–6 diapositivas)",
+      "description": "Diseño de carrusel para Instagram",
+      "price": 450,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "individual",
+      "order": 2,
+      "hasQuantity": false
+    },
+    {
+      "id": 3,
+      "name": "Portada o destacado de perfil",
+      "description": "Diseño de portada o destacado para perfil",
+      "price": 150,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "individual",
+      "order": 3,
+      "hasQuantity": false
+    },
+    {
+      "id": 4,
+      "name": "Copywriting visual",
+      "description": "Redacción de textos para contenido visual",
+      "price": 80,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "individual",
+      "order": 4,
+      "hasQuantity": true,
+      "quantityLabel": "copies"
+    },
+    {
+      "id": 5,
+      "name": "Adaptación a otras plataformas",
+      "description": "Adaptación de contenido para diferentes plataformas",
+      "price": 100,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "individual",
+      "order": 5,
+      "hasQuantity": false
+    },
+    {
+      "id": 6,
+      "name": "Básico: 10 posts",
+      "description": "Paquete básico de 10 posts para redes sociales",
+      "price": 2000,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "package",
+      "order": 6,
+      "hasQuantity": false
+    },
+    {
+      "id": 7,
+      "name": "Profesional: 15 posts + 5 carruseles + copies",
+      "description": "Paquete profesional con posts, carruseles y copies",
+      "price": 3800,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "package",
+      "order": 7,
+      "hasQuantity": false
+    },
+    {
+      "id": 8,
+      "name": "Premium: 20 posts + 5 carruseles + 5 historias",
+      "description": "Paquete premium con posts, carruseles e historias",
+      "price": 5500,
+      "divisionId": 1,
+      "sectionId": 1,
+      "type": "package",
+      "order": 8,
+      "hasQuantity": false
+    },
+    {
+      "id": 9,
+      "name": "Planificación y calendario",
+      "description": "Planificación de contenido y calendario editorial",
+      "price": 800,
+      "divisionId": 2,
+      "sectionId": 1,
+      "type": "individual",
+      "order": 1,
+      "hasQuantity": false
+    },
+    {
+      "id": 10,
+      "name": "Programación y publicación",
+      "description": "Programación y publicación de contenido en redes",
+      "price": 700,
+      "divisionId": 2,
+      "sectionId": 1,
+      "type": "individual",
+      "order": 2,
+      "hasQuantity": false
+    },
+    {
+      "id": 11,
+      "name": "Identidad visual completa",
+      "description": "Desarrollo completo de identidad visual",
+      "price": 4000,
+      "divisionId": 6,
+      "sectionId": 2,
+      "type": "individual",
+      "order": 1,
+      "hasQuantity": false
+    },
+    {
+      "id": 12,
+      "name": "Rediseño de marca",
+      "description": "Rediseño y actualización de marca existente",
+      "price": 2500,
+      "divisionId": 6,
+      "sectionId": 2,
+      "type": "individual",
+      "order": 2,
+      "hasQuantity": false
+    }
+  ],
+  "receipts": []
+}
