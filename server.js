@@ -6,7 +6,8 @@ const multer = require('multer');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 
-const db = require('./PLATAFORMA CURSOS/database');
+const db = require('./PLATAFORMA-CURSOS/database');
+
 
 const app = express();
 // Servir toda la carpeta principal
@@ -14,7 +15,7 @@ app.use(express.static(__dirname));
 
 // Servir plataforma cursos
 app.use('/cursos', express.static(path.join(__dirname, 'PLATAFORMA CURSOS/public')));
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
